@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CL Welcome Week</title>
+</head>
+<link rel="stylesheet" href="mainstyle.css">
+
+<body>
+<div class="sidenav">
+    <h>College Life</h>
+    <custombutton id="authorize_button">Authorize</custombutton>
+    <custombutton id="signout_button">Sign Out</custombutton>
+    <a href="stats.html">Stats</a>
+    <a href="addentries.html">Add Card</a>
+    <a href="entries.html">Entries</a>
+    <a href="debug.html">Debug</a>
+</div>
+<div class="body">
+
+    <h1>College Life Welcome Week</h1>
+    <b></b>
+    <p>Please log in to your account to access the information.</p>
+    <!--Add buttons to initiate auth sequence and sign out-->
+
+    <custombutton2 id="authorize_button2">Authorize</custombutton2>
+    <custombutton2 id="signout_button2">Sign Out</custombutton2>
+
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+
+    <script src="js/index.js"></script>
+    <script src="js/main.js"></script>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</div>
+</body>
+</html>

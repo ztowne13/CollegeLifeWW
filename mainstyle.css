@@ -1,0 +1,163 @@
+.body {
+    margin-left: 291px;
+    font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;
+}
+
+.indent {
+    margin-left: 20px;
+}
+
+.body input[type=text] {
+    padding: 6px;
+    border: none white;
+    border-bottom: 1px solid lightskyblue;
+    margin-left: 8px;
+    font-size: 17px;
+    background-color: #f5f5f5;
+}
+
+.body h4 {
+    padding: 6px;
+    margin-left: 8px;
+    margin-bottom: 0px;
+    margin-top: 25px;
+}
+
+.body h3 {
+    margin-bottom: 10px;
+}
+
+.body select {
+    background-color: lightskyblue;
+    border: 6px solid transparent;
+    margin-left: 8px;
+    width: 225px;
+    font-size: 17px;
+}
+
+.body select:after {
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+.sidenav custombutton {
+    background-color: lightskyblue;
+    width: 100px;
+    height: 20px;
+    color: black;
+    border: none;
+    font-weight: normal;
+    text-align: center;
+    margin-left: 100px;
+    margin-bottom: 20px;
+}
+
+.body custombutton2 {
+    background-color: lightskyblue;
+    font-size: 100px;
+    width: 1000px;
+    height: 150px;
+    color: black;
+    border: none;
+    font-weight: bold;
+    text-align: center;
+}
+
+.body custombutton2:hover {
+    background-color: lightblue;
+    transition-duration: .2s;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.body submitbutton {
+    background-color: #9eedff;
+    padding-top: 20px;
+    margin-top: 30px;
+    width: 225px;
+    height: 55px;
+    color: black;
+    border: none;
+    font-weight: bold;
+    text-align: center;
+    font-size: 27px;
+    margin-left: 8px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.body submitbutton:hover {
+    transition: .25s ease-in-out;
+    background-color: lightskyblue;
+    color: #1c1c1c;
+    cursor: pointer;
+}
+
+.body submitbutton:active {
+    background-color: #e8fbff;
+    transition: .05s ease;
+}
+
+.bkg {
+    background-color: #b0daff;
+}
+
+.sidenav {
+    width: 300px;
+    position: fixed;
+    /*border-right: 1px solid lightgrey;*/
+    height: 100%;
+    overflow-x: hidden;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    font-family: Source Sans Pro,Helvetica Neue,Arial,sans-serif;
+    /*background-color: #2a384e;*/
+}
+
+.mainbody {
+    background-color: #1f1f1f;
+}
+
+.sidenav custombutton:hover {
+    background-color: lightblue;
+    transition-duration: .2s;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.sidenav h{
+    font-size: 25px;
+    color: white;
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+
+.sidenav a {
+    font-size: 18px;
+    color: white;
+    padding: 6px 8px 6px 28px;
+    display: block;
+    text-decoration: none;
+}
+
+.sidenav a:hover {
+    cursor: pointer;
+    color: gold;
+    font-weight: bold;
+    transition: .25s ease;
+}
+
+.sidenav a:active {
+    color: gold;
+    font-weight: bold;
+}
+

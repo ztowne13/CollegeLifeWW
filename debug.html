@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CL Welcome Week</title>
+</head>
+<link rel="stylesheet" href="mainstyle.css">
+
+<body>
+<div class="sidenav">
+    <h>College Life</h>
+    <custombutton id="authorize_button">Authorize</custombutton>
+    <custombutton id="signout_button">Sign Out</custombutton>
+    <a href="stats.html">Stats</a>
+    <a href="addentries.html">Add Card</a>
+    <a href="entries.html">Entries</a>
+    <a href="debug.html">Debug</a>
+</div>
+<div class="body">
+
+    <h1>Debug</h1>
+    <b></b>
+    <p>You can probably ignore this unless you're Zach.</p>
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <h3>Column Mapping</h3>
+
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+
+    <script src="js/debug.js"></script>
+    <script src="js/main.js"></script>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</div>
+</body>
+</html>

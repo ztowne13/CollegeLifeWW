@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel="stylesheet" href="mainstyle.css">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CL Welcome Week - Add Entries</title>
+</head>
+
+<body style="background-color: #1f1f1f">
+<div class="sidenav">
+    <h>College Life</h>
+    <custombutton id="authorize_button">Authorize</custombutton>
+    <custombutton id="signout_button">Sign Out</custombutton>
+    <a href="stats.html">Stats</a>
+    <a href="addentries.html">Add Card</a>
+    <a href="entries.html">Entries</a>
+    <a href="debug.html">Debug</a>
+</div>
+<div class="body">
+
+    <h1>Add New T-Shirt Card</h1>
+    <br>
+    <p>
+        Please make sure that the entry has a first OR last name at the least. It needs at
+        least one of them to work properly. For the rest, it's okay if they're blank.
+    </p>
+    <!--Add buttons to initiate auth sequence and sign out-->
+
+    <h4>First Name</h4>
+    <input id="firstname" type="text">
+    <br>
+    <h4>Last Name</h4>
+    <input id="lastname" type="text">
+    <br>
+    <h4>Year</h4>
+    <select id="year">
+        <option value="1" selected="selected">Freshmen</option>
+        <option value="2">Sophomore</option>
+        <option value="3">Junior</option>
+        <option value="4">Senior</option>
+        <option value="5+">Senior+</option>
+    </select>
+    <h4>Email</h4>
+    <input id="email" type="text">
+    <br>
+    <h4>Cell Number</h4>
+    <input id="cell" type="text">
+    <br>
+    <h4>Dorm</h4>
+    <select id="dorm">
+        <option value="Primero Grove">Primero Grove</option>
+        <option value="Segundo">Segundo</option>
+        <option value="Tercero" selected="selected">Tercero</option>
+        <option value="Cuarto">Cuarto</option>
+        <option value="">Off Campus</option>
+    </select>
+    <br>
+    <h4>Address</h4>
+    <input id="address" type="text">
+    <br>
+    <h4>T-Shirt Size</h4>
+    <select id="size">
+        <option value="S">Small</option>
+        <option value="M">Medium</option>
+        <option value="L" selected="selected">Large</option>
+        <option value="XL">Extra Large</option>
+        <option value="">Unspecified</option>
+    </select>
+    <br>
+    <h4>Interested in Joining Bible Study</h4>
+    <select id="biblestudy">
+        <option value="Yes">Yes</option>
+        <option value="No" selected="selected">No</option>
+    </select>
+    <br>
+    <h4>Wants to be on CL Facebook Page</h4>
+    <select id="facebook">
+        <option value="Yes">Yes</option>
+        <option value="No" selected="selected">No</option>
+    </select>
+    <br>
+    <h4>Other Notes</h4>
+    <input id="notes" type="text">
+    <br>
+    <h4>Recruiter</h4>
+    <input id="recruiter" type="text">
+    <br>
+
+    <submitbutton type="submit" id="submit_button">Submit</submitbutton>
+
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+
+    <script src="js/addentries.js"></script>
+    <script src="js/main.js"></script>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+            onload="this.onload=function(){};handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+
+    <script>
+        var input = document.getElementById("myInput");
+        input.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("myBtn").click();
+            }
+        });
+    </script>
+</div>
+</body>
+</html>

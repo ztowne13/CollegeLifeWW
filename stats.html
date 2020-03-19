@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CL Welcome Week - Stats</title>
+</head>
+<link rel="stylesheet" href="mainstyle.css">
+
+<body>
+<div class="sidenav">
+    <h>College Life</h>
+    <custombutton id="authorize_button">Authorize</custombutton>
+    <custombutton id="signout_button">Sign Out</custombutton>
+    <a href="stats.html">Stats</a>
+    <a href="addentries.html">Add Card</a>
+    <a href="entries.html">Entries</a>
+    <a href="debug.html">Debug</a>
+</div>
+<div class="body">
+    <div class="indent">
+        <h1>Stats</h1>
+        <b></b>
+        <!--Add buttons to initiate auth sequence and sign out-->
+
+        <h3>People Entered:</h3>
+        <p id="entered">loading...</p>
+        <h3>T-Shirts Delivered:</h3>
+        <p id="delivered">loading...</p>
+        <h3>Recruiters by the Numbers</h3>
+        <p id="recruit">loading...</p>
+
+        <pre id="content" style="white-space: pre-wrap;"></pre>
+
+        <script src="js/stats.js"></script>
+        <script src="js/main.js"></script>
+
+        <script async defer src="https://apis.google.com/js/api.js"
+                onload="this.onload=function(){};handleClientLoad()"
+                onreadystatechange="if (this.readyState === 'complete') this.onload()">
+        </script>
+    </div>
+</div>
+</body>
+</html>

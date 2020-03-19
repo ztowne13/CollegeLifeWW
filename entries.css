@@ -1,0 +1,215 @@
+.entry {
+    background-color: #3d3d3d;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 0;
+    margin-right: 0;
+    height: 105px;
+    /*border: 1px solid lightgrey;*/
+}
+
+.entry input[type='checkbox'] {
+    margin-left: 30px;
+    background-color:#0b0095;
+    color:#FFF;
+    white-space: nowrap;
+    overflow:hidden;
+
+    width:20px;
+    height:20px;
+}
+
+.entry b {
+    font-size: 30px;
+    margin-left: 10px;
+}
+
+.entry:hover {
+    background-color: #7dbaff;
+    transition: .25s ease;
+}
+
+.entry name {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.entry year {
+    font-size: 22px;
+    color: #ff5436;
+    margin-left: 20px;
+}
+
+.entry yesnospace {
+    margin-left: 22px;
+}
+
+.entry yes {
+    color: green;
+    font-size: 22px;
+}
+
+.entry no {
+    color: crimson;
+    font-size: 22px;
+}
+
+.entry wants {
+    margin-left: 22px;
+    color: #5e1b1b;
+}
+
+.entry size {
+    color: slategray;
+    font-size: 22px;
+    margin-left: 20px;
+}
+
+.entry dorm {
+    font-weight: bold;
+    color: #3d3d3d;
+}
+
+.entry addr {
+    padding-left: 10px;
+    color: mediumslateblue;
+}
+
+.entry email {
+
+}
+
+.entry cell {
+    padding-left: 10px;
+}
+
+.entry notes {
+
+}
+
+.entry recruiter{
+
+}
+
+.entry edit {
+    float: right;
+    opacity: 0;
+    font-size: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+    font-weight: bold;
+    background-color: #3d3d3d;
+    color: white;
+}
+
+.entry size {
+
+}
+
+.entry delete {
+    float: right;
+    opacity: 0;
+    font-size: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    font-weight: bold;
+    background-color: #fc5732;
+    color: white;
+}
+
+.entry save {
+    float: right;
+    opacity: 1;
+    font-size: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+    font-weight: bold;
+    background-color: #ffe03b;
+    color: white;
+}
+
+.entry cancel {
+    float: right;
+    opacity: 1;
+    font-size: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-right: 22px;
+    padding-left: 22px;
+    font-weight: bold;
+    background-color: lightslategrey;
+    color: white;
+}
+
+.entry save:hover {
+    cursor: pointer;
+    background-color: gold;
+}
+
+.entry cancel:hover {
+    cursor: pointer;
+    background-color: slategray;
+}
+
+.entry edit:hover {
+    cursor: pointer;
+    background-color: black;
+}
+
+.entry delete:hover {
+    cursor: pointer;
+    background-color: #e60000;
+}
+
+.entry:hover edit {
+    opacity: 1;
+    transition: .2s ease;
+}
+
+.entry:hover delete {
+    opacity: 1;
+    transition: .2s ease;
+}
+
+.entry p {
+    padding-left: 10px;
+    margin-top: 3px;
+    margin-bottom: 0;
+}
+
+.entries {
+    margin-top: 100px;
+}
+
+.body input {
+    margin-top: 5px;
+}
+
+.body select {
+    margin-top: 5px;
+    position: relative;
+}
+
+.body spacer {
+    margin-left: 30px;
+}
+
+.body input[type=text] {
+    padding: 6px;
+    border: 1px solid lightskyblue;
+    margin-left: 8px;
+    font-size: 25px;
+    background-color: #f5f5f5;
+    width: 211px;
+}
+
+.entry input[type=text] {
+    font-size: 17px;
+}
