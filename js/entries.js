@@ -533,15 +533,24 @@ function addEntry(row, rowNum)
 
     let isDelivered = row[getTShirtIndex()];
     var delivered;
-    if(isDelivered == "TRUE") {
+    /*if(isDelivered == "TRUE") {
         delivered = document.createElement('yes');
         delivered.innerHTML = '✓';
     }
     else {
         delivered = document.createElement('no');
         delivered.innerHTML = 'X';
+    }*/
+
+    if(isDelivered !== "TRUE") {
+        name.style.color ='#ff8080'
     }
-    delivered.id = getId(uuid, "delivered");
+    else
+    {
+        name.style.color = "#dcffc3";
+    }
+
+    //delivered.id = getId(uuid, "delivered");
 
     let size = newElem('size');
     size.id = getId(uuid, 'size');
@@ -549,8 +558,8 @@ function addEntry(row, rowNum)
 
     p1.appendChild(name);
     p1.appendChild(year);
-    p1.appendChild(yesNoSpace);
-    p1.appendChild(delivered);
+    //p1.appendChild(yesNoSpace);
+    //p1.appendChild(delivered);
     p1.appendChild(size);
 
     /**
