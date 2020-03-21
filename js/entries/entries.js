@@ -35,6 +35,9 @@ function display(data)
     let maxLength = 26;
     let count = 0;
 
+    let displayElement = document.getElementById("display");
+    let display = displayElement.options[displayElement.selectedIndex].value + "";
+
     for (let i = 0; i < data.length; i++) {
         let row = data[i];
         // Print columns A and E, which correspond to indices 0 and 4.
@@ -51,7 +54,9 @@ function display(data)
         }
 
         if(statisfiesSearch(row) && i != 0) {
-            addEntry(row, i + 1);
+            let handler = new EntryHandler(display, 'entries');
+            handler.addEntry(row, i + 1, display);
+
             count++;
         }
     }
@@ -88,19 +93,6 @@ function statisfiesSearch(value) {
     let asString = valueTo.toLowerCase().replace(",", "");
 
     return asString.toLowerCase().includes(searchValue.toLowerCase());
-}
-
-function formattedSize(val) {
-    switch(val) {
-        case 'S':
-            return "Small";
-        case 'M':
-            return "Medium";
-        case 'L':
-            return "Large";
-        case "XL":
-            return "Extra Large";
-    }
 }
 
 function deleteBut(elem) {
@@ -145,21 +137,6 @@ function spreadsheetChanged(data) {
     }
 
     return false;
-}
-
-function fromYear(year) {
-    switch(year) {
-        case 'Freshmen':
-            return '1';
-        case 'Sophomore':
-            return '2';
-        case 'Junior':
-            return '3';
-        case 'Senior':
-            return '4';
-        case 'Senior+':
-            return '5+';
-    }
 }
 
 function saveFinish(data) {
@@ -423,10 +400,6 @@ function edit(elem) {
     entries.insertBefore(entry, document.getElementById(uuid));
 }
 
-function newElem(val) {
-    return document.createElement(val);
-}
-
 function getValFrom(uuid, prefix)
 {
     if(document.getElementById(getId(uuid, prefix)) == null)
@@ -442,14 +415,6 @@ function getValFrom(uuid, prefix)
         return elem.value;
 
     return elem.innerHTML;
-}
-
-function newInputElem(type, id) {
-    let elem = newElem('input');
-    elem.setAttribute('type', type);
-    elem.id = id;
-
-    return elem;
 }
 
 function newSelectElem(id, array, selected) {
@@ -470,246 +435,44 @@ function newSelectElem(id, array, selected) {
     return selectList;
 }
 
-function getId(uuid, prefix) {
-    return prefix + "-" + uuid;
+function newInputElem(type, id) {
+    let elem = newElem('input');
+    elem.setAttribute('type', type);
+    elem.id = id;
+
+    return elem;
 }
 
-function getPrefixFromId(id)
-{
-    return id.split("-")[0];
+function newElem(val) {
+    return document.createElement(val);
 }
 
-function getUuidFromId(id)
-{
-    return id.split("-")[1];
+function fromYear(year) {
+    switch(year) {
+        case 'Freshmen':
+            return '1';
+        case 'Sophomore':
+            return '2';
+        case 'Junior':
+            return '3';
+        case 'Senior':
+            return '4';
+        case 'Senior+':
+            return '5+';
+    }
 }
 
-// Height: 105, 80, 60
-
-function addEntry(row, rowNum)
-{
-    let first = row[getFirstNameIndex()];
-    let last = row[getLastNameIndex()];
-
-    if(!((isDefined(first) && first != "") || (isDefined(last) && last != ""))) {
-        return;
+function formattedSize(val) {
+    switch(val) {
+        case 'S':
+            return "Small";
+        case 'M':
+            return "Medium";
+        case 'L':
+            return "Large";
+        case "XL":
+            return "Extra Large";
     }
-
-    let uuid = uuidv4();
-    uuid = uuid + "." + rowNum;
-
-    let displaye = document.getElementById("display");
-    let display = displaye.options[displaye.selectedIndex].value + "";
-
-    let entries = document.getElementById('entries');
-    let entry = document.createElement("div");
-    entry.setAttribute('class', 'entry');
-    entry.id = uuid;
-
-    if(display == '3')
-        entry.style.height = '108px';
-    if(display == '2')
-        entry.style.height = '84px';
-    if(display == '1')
-        entry.style.height = '55px';
-
-
-    /**
-     * First <p>
-     **/
-
-    let p1 = document.createElement('p');
-    p1.id = getId(uuid, "p1");
-
-    let name = document.createElement("name");
-    name.innerHTML = row[getFirstNameIndex()] + " " + row[getLastNameIndex()];
-    name.id = getId(uuid, "name");
-
-    let year = document.createElement("year");
-    year.innerHTML = formattedYear(row[getYearIndex()]);
-    year.id = getId(uuid, "year");
-
-    let yesNoSpace = document.createElement('yesnospace');
-
-    let isDelivered = row[getTShirtIndex()];
-    var delivered;
-    /*if(isDelivered == "TRUE") {
-        delivered = document.createElement('yes');
-        delivered.innerHTML = '✓';
-    }
-    else {
-        delivered = document.createElement('no');
-        delivered.innerHTML = 'X';
-    }*/
-
-    if(isDelivered !== "TRUE") {
-        name.style.color ='#ff8080'
-    }
-    else
-    {
-        name.style.color = "#dcffc3";
-    }
-
-    //delivered.id = getId(uuid, "delivered");
-
-    let size = newElem('size');
-    size.id = getId(uuid, 'size');
-    size.innerHTML = row[getSizeIndex()];
-
-    p1.appendChild(name);
-    p1.appendChild(year);
-    //p1.appendChild(yesNoSpace);
-    //p1.appendChild(delivered);
-    p1.appendChild(size);
-
-    /**
-     * Second <p>
-     **/
-
-    let p2 = document.createElement('p');
-    p2.id = getId(uuid, "p2");
-
-    let dorm = document.createElement('dorm');
-    dorm.innerHTML = row[getDormIndex()];
-    if(dorm.innerHTML == "")
-        dorm.innerHTML = "Off Campus";
-    dorm.id = getId(uuid, "dorm");
-
-    let address = document.createElement('addr');
-    address.innerHTML = row[getAddressIndex()];
-    address.id = getId(uuid, "address");
-
-    p2.appendChild(dorm);
-    p2.appendChild(address);
-
-    /**
-     * Third <p>
-     **/
-
-    let p3 = document.createElement('p');
-    p3.id = getId(uuid, "p3");
-
-    let email = document.createElement('email');
-    email.innerHTML = row[getEmailIndex()];
-    email.id = getId(uuid, "email");
-
-    let cell = document.createElement('cell');
-    cell.innerHTML = row[getCellIndex()];
-    cell.id = getId(uuid, "cell");
-
-    let isFBVal = row[getFacebookIndex()];
-    let isFB = isDefined(isFBVal) ? isFBVal.toLowerCase() == 'yes' : false;
-    // var fb;
-    // if(isFB.toLowerCase() == "yes") {
-    //     fb = document.createElement('yes');
-    //     fb.innerHTML = "Bible Study"
-    // } else {
-    //     fb = document.createElement('no');
-    //     fb.innerHTML = "Bible Study";
-    // }
-    //
-    let isBibStudVal = row[getBibleStudyIndex()];
-    let isBibStud = isDefined(isBibStudVal) ? isBibStudVal.toLowerCase() == 'yes' : false;
-    // var bibStud;
-    // if(isBibStud.toLowerCase() == "yes") {
-    //     bibStud = document.createElement('yes');
-    //     bibStud.innerHTML = "FB";
-    // } else {
-    //     bibStud = document.createElement('no');
-    //     bibStud.innerHTML = "FB";
-    // }
-
-    //console.log("isBibStud: " + isBibStud);
-    let wants = (isBibStud || isFB) ? "Yes To: " : "";
-    if(isBibStud)
-        wants = wants + "Bible Study";
-    if(isFB)
-    {
-        if(isBibStud)
-            wants = wants + ", ";
-        wants = wants + "FB";
-    }
-
-    let wantsNode = document.createElement('wants');
-    wantsNode.innerHTML = wants;
-    wantsNode.id = getId(uuid, "wants");
-
-    p3.appendChild(email);
-    p3.appendChild(cell);
-    p3.appendChild(wantsNode);
-    // p3.appendChild(yesNoSpace.cloneNode());
-    // p3.appendChild(fb);
-    // p3.appendChild(yesNoSpace.cloneNode());
-    // p3.appendChild(bibStud);
-
-    /**
-     * Fourth <p>
-     */
-
-    let p4 = document.createElement('p');
-    p4.id = getId(uuid, "p4");
-
-    let notes = document.createElement('notes');
-    notes.innerHTML =  "Notes: " + row[getNotesIndex()];
-    notes.id = getId(uuid, "notes");
-
-    let recruiter = document.createElement('recruiter');
-    recruiter.innerHTML = "Recruiter: " + (isDefined(row[getRecruiterIndex()]) ? row[getRecruiterIndex()] : "n/a");
-    recruiter.id = getId(uuid, "recruiter");
-
-    if(isDefined(row[getNotesIndex()])) {
-        p4.appendChild(notes);
-        p4.appendChild(yesNoSpace.cloneNode());
-    }
-    p4.appendChild(recruiter);
-
-    let editButton = document.createElement('edit');
-    editButton.setAttribute('onclick', "edit(this)");
-    editButton.innerHTML = "Edit";
-    editButton.id = getId(uuid, "edit");
-
-    let deleteButton = document.createElement('delete');
-    deleteButton.setAttribute('onclick', "deleteBut(this)");
-    deleteButton.innerHTML = "Delete";
-    deleteButton.id = getId(uuid, "delete");
-
-    let size3 = '41px';
-    let size2 = '29px';
-    let size1 = '15px'
-
-    if(display == '3') {
-        editButton.style.paddingBottom = size3;
-        editButton.style.paddingTop = size3;
-        deleteButton.style.paddingBottom = size3;
-        deleteButton.style.paddingTop = size3;
-    }
-    if(display == '2') {
-        editButton.style.paddingBottom = size2;
-        editButton.style.paddingTop = size2;
-        deleteButton.style.paddingBottom = size2;
-        deleteButton.style.paddingTop = size2;
-    }
-    if(display == '1') {
-        editButton.style.paddingBottom = size1;
-        editButton.style.paddingTop = size1;
-        deleteButton.style.paddingBottom = size1;
-        deleteButton.style.paddingTop = size1;
-    }
-
-    entry.appendChild(deleteButton);
-    entry.appendChild(editButton);
-    entry.appendChild(p1);
-    entry.appendChild(p2);
-    entry.appendChild(p3);
-    entry.appendChild(p4);
-    if(display == '1') {
-        p3.style.display = 'none';
-        p4.style.display = 'none';
-    }
-    if(display == '2')
-        p4.style.display = 'none';
-
-    entries.appendChild(entry);
 }
 
 function formattedYear(year)
@@ -728,11 +491,4 @@ function formattedYear(year)
         default:
             return 'Unknown';
     }
-}
-
-function uuidv4() {
-    return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
 }
