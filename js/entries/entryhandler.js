@@ -1,3 +1,7 @@
+const SIZE3 = '41px';
+const SIZE2 = '29px';
+const SIZE1 = '15px';
+
 let EntryHandler = class {
 
     constructor(displayType, entriesElementName)
@@ -22,59 +26,43 @@ let EntryHandler = class {
         entry.setAttribute('class', 'entry');
         entry.id = uuid;
 
-        let editButton = new EditEntryElement(row, uuid).createEntryElement();
-        let deleteButton = new DeleteEntryElement(row, uuid).createEntryElement();
-        let p3 = new ContactEntryElement(row, uuid).createEntryElement()
-        let p4 = new ExtrasEntryElement(row, uuid).createEntryElement();
+        let editButton = new EditEntryElement(row, uuid);
+        editButton.createEntryElement();
+        let deleteButton = new DeleteEntryElement(row, uuid);
+        deleteButton.createEntryElement();
+        let p3 = new ContactEntryElement(row, uuid);
+        p3.createEntryElement()
+        let p4 = new ExtrasEntryElement(row, uuid);
+        p4.createEntryElement();
+
+        editButton.updateStyle(this.displayType);
+        deleteButton.updateStyle(this.displayType);
+        p3.updateStyle(this.displayType);
+        p4.updateStyle(this.displayType);
+
+
 
         this.updateEntryHeight(entry, editButton, deleteButton, p3, p4);
 
-        entry.appendChild(deleteButton);
-        entry.appendChild(editButton);
+        entry.appendChild(deleteButton.elem);
+        entry.appendChild(editButton.elem);
         entry.appendChild(new NameEntryElement(row, uuid).createEntryElement());
         entry.appendChild(new AddressEntryElement(row, uuid).createEntryElement());
-        entry.appendChild(p3);
-        entry.appendChild(p4);
+        entry.appendChild(p3.elem);
+        entry.appendChild(p4.elem);
 
         this.entriesElement.appendChild(entry);
     }
 
-    buildFirstParagraph()
-    {
-
-    }
-
-    updateEntryHeight(entry, editButton, deleteButton, p3, p4) {
-        const size3 = '41px';
-        const size2 = '29px';
-        const size1 = '15px';
-
-        let size;
+    updateEntryHeight(entry) {
 
         if (this.displayType == '3') {
             entry.style.height = '108px';
-
-            size = size3;
-
         } else if (this.displayType == '2') {
             entry.style.height = '84px';
-
-            p4.style.display = 'none';
-
-            size = size2;
         } else if(this.displayType == '1') {
             entry.style.height = '55px';
-
-            p3.style.display = 'none';
-            p4.style.display = 'none';
-
-            size = size1;
         }
-
-        editButton.style.paddingBottom = size;
-        editButton.style.paddingTop = size;
-        deleteButton.style.paddingBottom = size;
-        deleteButton.style.paddingTop = size;
     }
 }
 

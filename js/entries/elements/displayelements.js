@@ -1,29 +1,8 @@
-class EntryElement
-{
-    constructor(row, uuid)
-    {
-        this.row = row;
-        this.uuid = uuid;
-
-        if (this.createEntryElement === undefined) {
-            throw new TypeError('Classes extending the widget abstract class');
-        }
-    }
-    
-    createElem(id)
-    {
-        let p = document.createElement('p');
-        p.id = getId(this.uuid, "p" + id);
-        
-        return p;
-    }
-}
-
 class NameEntryElement extends EntryElement
 {
     createEntryElement()
     {
-        let p1 = this.createElem("1");
+        this.elem = this.createElem("1");
 
         let name = document.createElement("name");
         name.innerHTML = this.row[getFirstNameIndex()] + " " + this.row[getLastNameIndex()];
@@ -37,9 +16,9 @@ class NameEntryElement extends EntryElement
             name.style.color = "#dcffc3";
         }
 
-        p1.appendChild(name);
+        this.elem.appendChild(name);
 
-        return p1;
+        return this.elem;
     }
 }
 
@@ -47,7 +26,7 @@ class AddressEntryElement extends EntryElement
 {
     createEntryElement()
     {
-        let p2 = this.createElem("2");
+        this.elem = this.createElem("2");
 
         let size = newElem('size');
         size.id = getId(this.uuid, 'size');
@@ -63,11 +42,11 @@ class AddressEntryElement extends EntryElement
         address.innerHTML = this.row[getAddressIndex()];
         address.id = getId(this.uuid, "address");
 
-        p2.appendChild(dorm);
-        p2.appendChild(address);
-        p2.appendChild(size);
+        this.elem.appendChild(dorm);
+        this.elem.appendChild(address);
+        this.elem.appendChild(size);
 
-        return p2;
+        return this.elem;
     }
 }
 
@@ -75,7 +54,7 @@ class ContactEntryElement extends EntryElement
 {
     createEntryElement()
     {
-        let p3 = this.createElem("3");
+        this.elem = this.createElem("3");
 
         let email = document.createElement('email');
         email.innerHTML = this.row[getEmailIndex()];
@@ -89,11 +68,16 @@ class ContactEntryElement extends EntryElement
         year.innerHTML = formattedYear(this.row[getYearIndex()]);
         year.id = getId(this.uuid, "year");
 
-        p3.appendChild(year);
-        p3.appendChild(email);
-        p3.appendChild(cell);
+        this.elem.appendChild(year);
+        this.elem.appendChild(email);
+        this.elem.appendChild(cell);
 
-        return p3;
+        return this.elem;
+    }
+    
+    updateStyle(displayType) {
+        if(displayType == '1')
+            this.elem.style.display = 'none';
     }
 }
 
@@ -101,7 +85,7 @@ class ExtrasEntryElement extends EntryElement
 {
     createEntryElement()
     {
-        let p4 = this.createElem("4");
+        this.elem = this.createElem("4");
         let yesNoSpace = document.createElement('yesnospace');
 
         let notes = document.createElement('notes');
@@ -132,39 +116,17 @@ class ExtrasEntryElement extends EntryElement
         wantsNode.id = getId(this.uuid, "wants");
 
         if(isDefined(this.row[getNotesIndex()])) {
-            p4.appendChild(notes);
-            p4.appendChild(yesNoSpace.cloneNode());
+            this.elem.appendChild(notes);
+            this.elem.appendChild(yesNoSpace.cloneNode());
         }
-        p4.appendChild(recruiter);
-        p4.appendChild(wantsNode);
+        this.elem.appendChild(recruiter);
+        this.elem.appendChild(wantsNode);
 
-        return p4;
+        return this.elem;
     }
-}
 
-class EditEntryElement extends EntryElement 
-{
-    createEntryElement()
-    {
-        
-        let editButton = document.createElement('edit');
-        editButton.setAttribute('onclick', "edit(this)");
-        editButton.innerHTML = "Edit";
-        editButton.id = getId(this.uuid, "edit");
-
-        return editButton;
-    }
-}
-
-class DeleteEntryElement extends EntryElement
-{
-    createEntryElement()
-    {
-        let deleteButton = document.createElement('delete');
-        deleteButton.setAttribute('onclick', "deleteBut(this)");
-        deleteButton.innerHTML = "Delete";
-        deleteButton.id = getId(this.uuid, "delete");
-
-        return deleteButton
+    updateStyle(displayType) {
+        if(displayType == '1' || displayType == '2')
+            this.elem.style.display = 'none';
     }
 }

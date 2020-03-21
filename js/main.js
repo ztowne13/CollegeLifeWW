@@ -18,15 +18,15 @@ var mappedColumns = {};
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
-    loadConstants();
+    importJs('data/data.js');
 
     gapi.load('client:auth2', initClient);
 }
 
-function loadConstants()
+function importJs(name)
 {
     let imported = document.createElement('script');
-    imported.src = 'data/data.js';
+    imported.src = name;
     document.head.appendChild(imported);
 }
 
