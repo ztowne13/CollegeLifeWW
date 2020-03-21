@@ -1,7 +1,4 @@
 // Client ID and API key from the Developer Console
-var CLIENT_ID = '322251024340-mq7mk14kt7q6lp4pttpd8u44ed6cqpno.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyAHOmzfyF4lyooMW56zn5nB5hqbuDKbJs0';
-var SHEET_ID = '1svQddC1HvXZIPojpHGY3E44JteUh3j-_07CwTE37n44';
 
 var PAGE_NAME = "Main!";
 
@@ -21,7 +18,16 @@ var mappedColumns = {};
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
+    loadConstants();
+
     gapi.load('client:auth2', initClient);
+}
+
+function loadConstants()
+{
+    let imported = document.createElement('script');
+    imported.src = 'data/data.js';
+    document.head.appendChild(imported);
 }
 
 /**
@@ -222,24 +228,3 @@ function isDefined(variable)
 {
     return typeof variable !== 'undefined'
 }
-
-// function listMajors() {
-//     gapi.client.sheets.spreadsheets.values.get({
-//         spreadsheetId: '1svQddC1HvXZIPojpHGY3E44JteUh3j-_07CwTE37n44',
-//         range: 'Main!I2:J',
-//     }).then(function(response) {
-//         var range = response.result;
-//         if (range.values.length > 0) {
-//             appendPre('First, Last:');
-//             for (i = 0; i < range.values.length; i++) {
-//                 var row = range.values[i];
-//                 // Print columns A and E, which correspond to indices 0 and 4.
-//                 appendPre(row[0] + ', ' + row[1]);
-//             }
-//         } else {
-//             appendPre('No data found.');
-//         }
-//     }, function(response) {
-//         appendPre('Error: ' + response.result.error.message);
-//     });
-// }
