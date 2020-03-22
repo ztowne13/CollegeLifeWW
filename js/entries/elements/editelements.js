@@ -12,8 +12,10 @@ class EditNameEntryElement extends EntryElement
         let year = newSelectElem(getId(this.uuid, "edityear"), yearArray, getValFrom(this.uuid, "year"));
 
         let tArray = ["T-Shirt Delivered", "T-Shirt Not Delivered"];
+        console.log("color: " + document.getElementById(getId(this.uuid, "name")).style.color);
+        let delivered = document.getElementById(getId(this.uuid, "name")).style.color == "rgb(220, 255, 195)";
         let deliveredT = newSelectElem(getId(this.uuid, "editdelivered"),
-            tArray, getValFrom(this.uuid, "delivered") == "X" ? "T-Shirt Not Delivered" : "T-Shirt Delivered");
+            tArray, !delivered ? "T-Shirt Not Delivered" : "T-Shirt Delivered");
 
         let sizeArray = ['Small', 'Medium', 'Large', 'Extra Large'];
         let tsize = newSelectElem(getId(this.uuid, 'editsize'), sizeArray, formattedSize(getValFrom(this.uuid, 'size')));

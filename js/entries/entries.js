@@ -38,6 +38,18 @@ function display(data)
     let displayElement = document.getElementById("display");
     let display = displayElement.options[displayElement.selectedIndex].value + "";
 
+    let elements = [
+        ElementTypes.Delete,
+        ElementTypes.Edit,
+        ElementTypes.Name,
+        ElementTypes.Address,
+        ElementTypes.Contact,
+        ElementTypes.Extras
+    ];
+
+    let handler = new EntryHandler('', display, 'entries', elements)
+
+
     for (let i = 0; i < data.length; i++) {
         let row = data[i];
         // Print columns A and E, which correspond to indices 0 and 4.
@@ -54,7 +66,6 @@ function display(data)
         }
 
         if(statisfiesSearch(row) && i != 0) {
-            let handler = new EntryHandler(display, 'entries');
             handler.addEntry(row, i + 1, display);
 
             count++;

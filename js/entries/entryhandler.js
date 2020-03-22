@@ -2,15 +2,58 @@ const SIZE3 = '41px';
 const SIZE2 = '29px';
 const SIZE1 = '15px';
 
+const ElementTypes = {
+    Edit: 'EditEntryElement',
+    Delete: 'DeleteEntryElement',
+    Contact: 'ContactEntryElement',
+    Extras: 'ExtrasEntryElement',
+    Name: 'NameEntryElement',
+    Address: 'AddressEntryElement',
+    EditContact: 'EditContactEntryElement',
+    EditExtras: 'EditExtrasEntryElement',
+    EditName: 'EditNameEntryElement',
+    EditAddress: 'EditAddressEntryElement',
+    Save: 'SaveEntryElement',
+    Cancel: 'CancelEntryElement'
+};
+
+const DisplayType = {
+    Simple: 1,
+    SemiDetailed: 2,
+    Detailed: 3,
+    Edit: 4
+}
+
 let EntryHandler = class {
 
-    constructor(displayType, entriesElementName)
+    constructor(prefix, displayType, entriesElementName, elements)
     {
+        this.prefix = prefix;
         this.displayType = displayType;
         this.entriesElement = document.getElementById(entriesElementName);
+        this.elements = elements;
+        this.createdElements = []
     }
 
     addEntry(row, rowNum)
+    {
+        let uuid = uuidv4();
+        uuid = uuid + "." + rowNum;
+
+        let entry = this.getEntry(row, rowNum, uuid);
+        if(entry === undefined)
+            return;
+
+        this.entriesElement.appendChild(entry);
+    }
+
+    addEntryBefore(row, rowNum, uuid, beforeEntry)
+    {
+        let elem = this.getEntry(row, rowNum, uuid);
+        this.entriesElement.insertBefore(elem, beforeEntry);
+    }
+
+    getEntry(row, rowNum, uuid)
     {
         let first = row[getFirstNameIndex()];
         let last = row[getLastNameIndex()];
@@ -19,49 +62,35 @@ let EntryHandler = class {
             return;
         }
 
-        let uuid = uuidv4();
-        uuid = uuid + "." + rowNum;
-
         let entry = document.createElement("div");
         entry.setAttribute('class', 'entry');
-        entry.id = uuid;
+        entry.id = this.prefix === '' ? uuid : getId(uuid, this.prefix);
 
-        let editButton = new EditEntryElement(row, uuid);
-        editButton.createEntryElement();
-        let deleteButton = new DeleteEntryElement(row, uuid);
-        deleteButton.createEntryElement();
-        let p3 = new ContactEntryElement(row, uuid);
-        p3.createEntryElement()
-        let p4 = new ExtrasEntryElement(row, uuid);
-        p4.createEntryElement();
+        this.updateEntryHeight(entry)
 
-        editButton.updateStyle(this.displayType);
-        deleteButton.updateStyle(this.displayType);
-        p3.updateStyle(this.displayType);
-        p4.updateStyle(this.displayType);
+        for(let elementId in this.elements) {
+            let newElement = eval("new " + this.elements[elementId] + "(row, uuid);");
 
+            this.createdElements.push(newElement);
 
+            newElement.createEntryElement();
+            newElement.updateStyle(this.displayType);
+            entry.append(newElement.elem);
+        }
 
-        this.updateEntryHeight(entry, editButton, deleteButton, p3, p4);
-
-        entry.appendChild(deleteButton.elem);
-        entry.appendChild(editButton.elem);
-        entry.appendChild(new NameEntryElement(row, uuid).createEntryElement());
-        entry.appendChild(new AddressEntryElement(row, uuid).createEntryElement());
-        entry.appendChild(p3.elem);
-        entry.appendChild(p4.elem);
-
-        this.entriesElement.appendChild(entry);
+        return entry;
     }
 
     updateEntryHeight(entry) {
 
-        if (this.displayType == '3') {
+        if (this.displayType == DisplayType.Detailed) {
             entry.style.height = '108px';
-        } else if (this.displayType == '2') {
+        } else if (this.displayType == DisplayType.SemiDetailed) {
             entry.style.height = '84px';
-        } else if(this.displayType == '1') {
+        } else if(this.displayType == DisplayType.Simple) {
             entry.style.height = '55px';
+        } else if(this.displayType == DisplayType.Edit) {
+            entry.style.height = '175px';
         }
     }
 }

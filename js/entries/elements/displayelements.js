@@ -76,7 +76,7 @@ class ContactEntryElement extends EntryElement
     }
     
     updateStyle(displayType) {
-        if(displayType == '1')
+        if(displayType == DisplayType.Simple)
             this.elem.style.display = 'none';
     }
 }
@@ -126,7 +126,7 @@ class ExtrasEntryElement extends EntryElement
     }
 
     updateStyle(displayType) {
-        if(displayType == '1' || displayType == '2')
+        if(displayType == DisplayType.Simple || displayType == DisplayType.SemiDetailed)
             this.elem.style.display = 'none';
     }
 }

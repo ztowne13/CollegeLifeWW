@@ -15,46 +15,30 @@ class EditEntryElement extends EntryElement
     onClick()
     {
         let id = this.elem.id;
-        let prefix = getPrefixFromId(id);
         let uuid = getUuidFromId(id);
 
         document.getElementById(uuid).style.display = 'none';
 
-        let entries = document.getElementById('entries');
-        let entry = document.createElement("div");
-        entry.setAttribute('class', 'entry');
-        entry.id = getId(uuid, "editing");
-        entry.style.height = '175px';
+        let elements = [
+            ElementTypes.Cancel,
+            ElementTypes.Save,
+            ElementTypes.EditName,
+            ElementTypes.EditAddress,
+            ElementTypes.EditContact,
+            ElementTypes.EditExtras
+        ]
 
-        let p1 = new EditNameEntryElement(this.row, uuid).createEntryElement();
-        let p2 = new EditAddressEntryElement(this.row, uuid).createEntryElement();
-        let p3 = new EditContactEntryElement(this.row, uuid).createEntryElement();
-        let p4 = new EditExtrasEntryElement(this.row, uuid).createEntryElement();
+        let entryHandler = new EntryHandler('editing', DisplayType.Edit, 'entries', elements);
 
-        let saveButton = new SaveEntryElement(this.row, uuid).createEntryElement();
-        let cancelButton = new CancelEntryElement(this.row, uuid).createEntryElement();
-
-        let size = '75px';
-
-        cancelButton.style.paddingBottom = size;
-        cancelButton.style.paddingTop = size;
-        saveButton.style.paddingBottom = size;
-        saveButton.style.paddingTop = size;
-
-        entry.appendChild(cancelButton);
-        entry.appendChild(saveButton);
-        entry.appendChild(p1);
-        entry.appendChild(p2);
-        entry.appendChild(p3);
-        entry.appendChild(p4);
-        entries.insertBefore(entry, document.getElementById(uuid));
+        let rowNum = id.split(".")[1];
+        entryHandler.addEntryBefore(this.row, rowNum, uuid, document.getElementById(uuid));
     }
 
     updateStyle(displayType) {
         let size = SIZE1;
-        if(displayType == '2')
+        if(displayType == DisplayType.SemiDetailed)
             size = SIZE2;
-        else if(displayType == '3')
+        else if(displayType == DisplayType.Detailed)
             size = SIZE3;
 
         this.elem.style.paddingTop = size;
@@ -206,9 +190,9 @@ class DeleteEntryElement extends EntryElement
 
     updateStyle(displayType) {
         let size = SIZE1;
-        if(displayType == '2')
+        if(displayType == DisplayType.SemiDetailed)
             size = SIZE2;
-        else if(displayType == '3')
+        else if(displayType == DisplayType.Detailed)
             size = SIZE3;
 
         this.elem.style.paddingTop = size;
