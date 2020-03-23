@@ -130,3 +130,26 @@ class ExtrasEntryElement extends EntryElement
             this.elem.style.display = 'none';
     }
 }
+
+class StatEntryElement extends EntryElement
+{
+    createEntryElement()
+    {
+        this.elem = this.createElem("1");
+
+        let name = document.createElement("name");
+        name.innerHTML = this.row[0][0].toUpperCase() + this.row[0].substring(1);
+        name.id = getId(this.uuid, "name");
+        name.style.color = "#ffe424"
+        name.style.marginLeft = "15px";
+
+        let amnt = document.createElement("name");
+        amnt.innerHTML = this.row[1];
+        amnt.id = getId(this.uuid, "amnt");
+
+        this.elem.appendChild(amnt);
+        this.elem.appendChild(name);
+
+        return this.elem;
+    }
+}

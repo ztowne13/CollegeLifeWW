@@ -14,14 +14,16 @@ const ElementTypes = {
     EditName: 'EditNameEntryElement',
     EditAddress: 'EditAddressEntryElement',
     Save: 'SaveEntryElement',
-    Cancel: 'CancelEntryElement'
+    Cancel: 'CancelEntryElement',
+    Stat: 'StatEntryElement'
 };
 
 const DisplayType = {
     Simple: 1,
     SemiDetailed: 2,
     Detailed: 3,
-    Edit: 4
+    Edit: 4,
+    Stat: 5
 }
 
 let EntryHandler = class {
@@ -55,11 +57,13 @@ let EntryHandler = class {
 
     getEntry(row, rowNum, uuid)
     {
-        let first = row[getFirstNameIndex()];
-        let last = row[getLastNameIndex()];
+        if(rowNum > -1) {
+            let first = row[getFirstNameIndex()];
+            let last = row[getLastNameIndex()];
 
-        if(!((isDefined(first) && first != "") || (isDefined(last) && last != ""))) {
-            return;
+            if (!((isDefined(first) && first != "") || (isDefined(last) && last != ""))) {
+                return;
+            }
         }
 
         let entry = document.createElement("div");
@@ -91,6 +95,9 @@ let EntryHandler = class {
             entry.style.height = '55px';
         } else if(this.displayType == DisplayType.Edit) {
             entry.style.height = '175px';
+        } else if(this.displayType == DisplayType.Stat) {
+            entry.style.height = '35px';
+            this.entriesElement.style.marginTop = '25px';
         }
     }
 }

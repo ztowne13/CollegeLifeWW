@@ -4,9 +4,24 @@ function init(data)
     console.log("DATA: " + data);
     console.log("DATA LEN: " + data.length);
 
-    document.getElementById('entered').innerText = getPeopleEntered(data);
-    document.getElementById('delivered').innerText = getTShirtsDelivered(data);
-    document.getElementById('recruit').innerText = getPeopleStats(data);
+    let peopleEntered = getPeopleEntered(data);
+    let tShirtsDelivered = getTShirtsDelivered(data);
+
+    document.getElementById('entered').innerText = peopleEntered;
+    document.getElementById('delivered').innerText = tShirtsDelivered;
+    document.getElementById('tobedelivered').innerText = peopleEntered - tShirtsDelivered;
+
+    let elements = [
+        ElementTypes.Stat
+    ]
+    //document.getElementById('recruit').innerText = getPeopleStats(data);
+    let entryHandler = new EntryHandler('', DisplayType.Stat, 'entries', elements);
+    let peopleStats = getPeopleStats(data);
+    for(let i = 0; i < peopleStats.length; i++)
+    {
+        let peopleStat = peopleStats[i];
+        entryHandler.addEntry(peopleStat, -1);
+    }
 }
 
 function getTShirtsDelivered(data)
@@ -38,6 +53,7 @@ function getPeopleEntered(data)
 
 function getPeopleStats(data) {
     let dict = {};
+    let info = []
 
     for(let i = 0; i < data.length; i++)
     {
@@ -65,8 +81,8 @@ function getPeopleStats(data) {
     }
     //recruiter: num
     let formatted = "";
-    let lastBestKey = "";
-    let lastBestAmnt = -1;
+    let lastBestKey;
+    let lastBestAmnt;
 
     let count = 1;
 
@@ -86,10 +102,12 @@ function getPeopleStats(data) {
         if(lastBestAmnt == -1)
             break;
 
+        info.push([lastBestKey, lastBestAmnt]);
         formatted = formatted + count + ". " + lastBestKey + " - " + lastBestAmnt + "\n";
         dict[lastBestKey] = -1;
         count++;
     }
 
-    return formatted;
+    return info;
+    // return formatted;
 }

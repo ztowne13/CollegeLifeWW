@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <title>CL Welcome Week - Stats</title>
 </head>
-<link rel="stylesheet" href="mainstyle.css">
+
+<link rel="stylesheet" href="styling/mainstyle.css">
+<link rel="stylesheet" href="styling/entries.css">
+<link rel="stylesheet" href="styling/stats.css">
 
 <body class="mainbody">
 <div class="sidenav">
@@ -14,6 +17,7 @@
     <a href="stats.html">Stats</a>
     <a href="addentries.html">Add Card</a>
     <a href="entries.html">Entries</a>
+    <a href="tshirtcards.html">Deliveries</a>
     <a href="debug.html">Debug</a>
 </div>
 <div class="body">
@@ -22,15 +26,26 @@
         <b></b>
         <!--Add buttons to initiate auth sequence and sign out-->
 
-        <h3>People Entered:</h3>
-        <p id="entered">loading...</p>
-        <h3>T-Shirts Delivered:</h3>
-        <p id="delivered">loading...</p>
-        <h3>Recruiters by the Numbers</h3>
-        <p id="recruit">loading...</p>
+        <div class="stats">
+            <h3>People Entered:</h3>
+            <p id="entered">loading...</p>
+            <h3>T-Shirts Delivered:</h3>
+            <p id="delivered">loading...</p>
+            <h3>T-Shirts to be Delivered:</h3>
+            <p id="tobedelivered">loading...</p>
+            <h3>Recruiters by the Numbers</h3>
+    <!--        <p id="recruit">loading...</p>-->
+        </div>
+
+        <div class="entries" id="entries"></div>
 
         <pre id="content" style="white-space: pre-wrap;"></pre>
 
+        <script src="js/entries/elements/entryelement.js"></script>
+        <script src="js/entries/elements/buttonelements.js"></script>
+        <script src="js/entries/elements/displayelements.js"></script>
+        <script src="js/entries/elements/editelements.js"></script>
+        <script src="js/entries/entryhandler.js"></script>
         <script src="js/stats.js"></script>
         <script src="js/main.js"></script>
 
