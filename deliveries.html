@@ -6,8 +6,10 @@
 </head>
 <link rel="stylesheet" href="styling/mainstyle.css">
 <link rel="stylesheet" href="styling/entries.css">
+<link rel="stylesheet" href="styling/deliveries.css">
 
 <body class = "mainbody">
+
 <div class="sidenav">
     <h>College Life</h>
     <custombutton id="authorize_button">Authorize</custombutton>
@@ -15,18 +17,28 @@
     <a href="stats.html">Stats</a>
     <a href="addentries.html">Add Card</a>
     <a href="entries.html">Entries</a>
-    <a href="tshirtcards.html">Deliveries</a>
+    <a href="deliveries.html">Deliveries</a>
     <a href="debug.html">Debug</a>
 </div>
 
 <div class="body">
 
-    <h1 id="headerentries">Deliveries</h1>
+    <h1>Delivery Creator</h1>
     <b></b>
 
-    <div class="entries" id="entries"></div>
+    <h2 style="margin-top: 75px">Dorm Location</h2>
+    <div class="entries" id="entries-dorm"></div>
 
-    <script src="js/entries/entries.js"></script>
+    <h2 style="margin-top: 75px">Dorm Building</h2>
+    <div class="entries" id="entries-building"></div>
+
+    <script src="js/filter/filter.js"></script>
+    <script src="js/entries/elements/entryelement.js"></script>
+    <script src="js/entries/elements/buttonelements.js"></script>
+    <script src="js/entries/elements/displayelements.js"></script>
+    <script src="js/entries/elements/editelements.js"></script>
+    <script src="js/entries/entryhandler.js"></script>
+    <script src="js/deliveries.js"></script>
     <script src="js/main.js"></script>
 
     <script async defer src="https://apis.google.com/js/api.js"

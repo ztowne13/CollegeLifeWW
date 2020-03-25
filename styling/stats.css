@@ -1,0 +1,31 @@
+.stats {
+    background-color: #404040;
+    padding: 10px;
+}
+
+.mainbody h3{
+    font-weight: bold;
+    font-size: 23px;
+    display: inline;
+}
+
+.mainbody statgreen {
+    display: inline;
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 23px;
+    color: #dcffc3;
+}
+
+.mainbody statred {
+    display: inline;
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 23px;
+    color: #ff8080;
+}
+
+.mainbody h1 {
+    color: #fffdc1;
+    font-size: 40px;
+}

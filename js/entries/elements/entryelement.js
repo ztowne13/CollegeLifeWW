@@ -1,7 +1,9 @@
 class EntryElement
 {
-    constructor(row, uuid)
+    constructor(row, uuid, entryManager)
     {
+        this.entryManager = entryManager;
+        this.entryElement = entryManager.entry;
         this.row = row;
         this.uuid = uuid;
         this.elem = null;
@@ -12,11 +14,19 @@ class EntryElement
 
     }
 
-    hookUp()
+    hookUp(withEntry = false)
     {
         let _this = this;
         this.elem.onclick = function() {
             _this.onClick(this.elem);
+        }
+
+        if(withEntry)
+        {
+            this.entryElement.style.cursor = 'pointer';
+            this.entryElement.onclick = function() {
+                _this.onClickEntry(this.elem);
+            }
         }
     }
 
@@ -29,6 +39,8 @@ class EntryElement
     }
 
     onClick() {}
+
+    onClickEntry() {}
 
     updateStyle(displayType) {}
 }

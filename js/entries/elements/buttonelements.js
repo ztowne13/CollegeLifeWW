@@ -1,15 +1,60 @@
-class EditEntryElement extends EntryElement
+class TextButtonEntryElement extends EntryElement
 {
+    constructor(text, type, row, uuid, entryManager)
+    {
+        super(row, uuid, entryManager);
+
+        this.text = text;
+        this.type = type;
+    }
+
     createEntryElement()
     {
-
-        this.elem = document.createElement('edit');
-        this.elem.innerHTML = "Edit";
-        this.elem.id = getId(this.uuid, "edit");
+        this.elem = document.createElement(this.type);
+        this.elem.innerHTML = this.text;
+        this.elem.id = getId(this.uuid, this.type);
 
         this.hookUp();
 
         return this.elem;
+    }
+
+    onClick()
+    {
+        let _this = this;
+        loadData(function(data) {
+            _this.complete(data);
+        })
+    }
+}
+
+class EditButtonEntryElement extends TextButtonEntryElement
+{
+    updateStyle(displayType) {
+        this.elem.style.paddingTop = '75px';
+        this.elem.style.paddingBottom = '75px';
+    }
+}
+
+class EntryButtonEntryElement extends TextButtonEntryElement
+{
+    updateStyle(displayType) {
+        let size = SIZE1;
+        if(displayType == DisplayType.SemiDetailed)
+            size = SIZE2;
+        else if(displayType == DisplayType.Detailed)
+            size = SIZE3;
+
+        this.elem.style.paddingTop = size;
+        this.elem.style.paddingBottom = size;
+    }
+}
+
+class EditEntryElement extends EntryButtonEntryElement
+{
+    constructor(row, uuid, entryManager)
+    {
+        super('Edit', 'edit', row, uuid, entryManager);
     }
 
     onClick()
@@ -33,30 +78,13 @@ class EditEntryElement extends EntryElement
         let rowNum = id.split(".")[1];
         entryHandler.addEntryBefore(this.row, rowNum, uuid, document.getElementById(uuid));
     }
-
-    updateStyle(displayType) {
-        let size = SIZE1;
-        if(displayType == DisplayType.SemiDetailed)
-            size = SIZE2;
-        else if(displayType == DisplayType.Detailed)
-            size = SIZE3;
-
-        this.elem.style.paddingTop = size;
-        this.elem.style.paddingBottom = size;
-    }
 }
 
-class CancelEntryElement extends EntryElement
+class CancelEntryElement extends EditButtonEntryElement
 {
-    createEntryElement()
+    constructor(row, uuid, entryManager)
     {
-        this.elem = document.createElement('cancel');
-        this.elem.innerHTML = "Cancel";
-        this.elem.id = getId(this.uuid, "cancel");
-
-        this.hookUp();
-
-        return this.elem;
+        super('Cancel', 'cancel', row, uuid, entryManager);
     }
 
     onClick()
@@ -70,32 +98,13 @@ class CancelEntryElement extends EntryElement
         let editing = document.getElementById(getId(uuid, "editing"));
         entries.removeChild(editing);
     }
-
-    updateStyle(displayType) {
-        this.elem.style.paddingTop = '75px';
-        this.elem.style.paddingBottom = '75px';
-    }
 }
 
-class SaveEntryElement extends EntryElement
+class SaveEntryElement extends EditButtonEntryElement
 {
-    createEntryElement()
+    constructor(row, uuid, entryManager)
     {
-        this.elem = document.createElement('save');
-        this.elem.innerHTML = "Save";
-        this.elem.id = getId(this.uuid, "save");
-
-        this.hookUp();
-
-        return this.elem;
-    }
-
-    onClick()
-    {
-        let _this = this;
-        loadData(function(data) {
-            _this.complete(data);
-        })
+        super('Save', 'save', row, uuid, entryManager);
     }
 
     complete(data)
@@ -140,32 +149,13 @@ class SaveEntryElement extends EntryElement
 
         makeApiCall_overwriteUpdate("A" + rowNum + ":Z" + rowNum, newArray, refresh);
     }
-
-    updateStyle(displayType) {
-        this.elem.style.paddingTop = '75px';
-        this.elem.style.paddingBottom = '75px';
-    }
 }
 
-class DeleteEntryElement extends EntryElement
+class DeleteEntryElement extends EntryButtonEntryElement
 {
-    createEntryElement()
+    constructor(row, uuid, entryManager)
     {
-        this.elem = document.createElement('delete');
-        this.elem.innerHTML = "Delete";
-        this.elem.id = getId(this.uuid, "delete");
-
-        this.hookUp();
-
-        return this.elem
-    }
-
-    onClick()
-    {
-        let _this = this;
-        loadData(function(data) {
-            _this.complete(data);
-        })
+        super('Delete', 'delete', row, uuid, entryManager);
     }
 
     complete(data)
@@ -187,15 +177,56 @@ class DeleteEntryElement extends EntryElement
 
         document.getElementById(getUuidFromId(this.elem.id)).style.display = 'none';
     }
+}
+
+class PrimeroEntryElement extends TextButtonEntryElement
+{
+    constructor(row, uuid, entryManager) {
+        super('P', 'edit', row, uuid, entryManager);
+    }
+}
+
+class SegundoEntryElement extends TextButtonEntryElement
+{
+    constructor(row, uuid, entryManager) {
+        super('S', 'edit', row, uuid, entryManager);
+    }
+}
+
+class CuartoEntryElement extends TextButtonEntryElement
+{
+    constructor(row, uuid, entryManager) {
+        super('C', 'edit', row, uuid, entryManager);
+    }
+}
+
+class ReassignEntryElement extends TextButtonEntryElement
+{
+    constructor(row, uuid, entryManager)
+    {
+        super('✎', 'edit', row, uuid, entryManager);
+    }
+
+    onClick() {
+        let id = this.elem.id;
+        let uuid = getUuidFromId(id);
+
+        document.getElementById(uuid).style.display = 'none';
+
+        let elements = [
+            ElementTypes.Primero,
+            ElementTypes.Segundo,
+            ElementTypes.Cuarto
+        ];
+
+        let entryHandler = new EntryHandler('reassigning', DisplayType.Button, 'entries-building', elements);
+
+        let rowNum = id.split(".")[1];
+        entryHandler.addEntryBefore(this.row, rowNum, uuid, document.getElementById(uuid));
+    }
 
     updateStyle(displayType) {
-        let size = SIZE1;
-        if(displayType == DisplayType.SemiDetailed)
-            size = SIZE2;
-        else if(displayType == DisplayType.Detailed)
-            size = SIZE3;
-
-        this.elem.style.paddingTop = size;
-        this.elem.style.paddingBottom = size;
+        this.elem.style.paddingTop = '5px';
+        this.elem.style.paddingBottom = '5px';
     }
 }

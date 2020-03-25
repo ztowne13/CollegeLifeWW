@@ -15,7 +15,12 @@ const ElementTypes = {
     EditAddress: 'EditAddressEntryElement',
     Save: 'SaveEntryElement',
     Cancel: 'CancelEntryElement',
-    Stat: 'StatEntryElement'
+    Stat: 'StatEntryElement',
+    Text: 'TextEntryElement',
+    Reassign: 'ReassignEntryElement',
+    Primero: 'PrimeroEntryElement',
+    Segundo: 'SegundoEntryElement',
+    Cuarto: 'CuartoEntryElement'
 };
 
 const DisplayType = {
@@ -23,7 +28,16 @@ const DisplayType = {
     SemiDetailed: 2,
     Detailed: 3,
     Edit: 4,
-    Stat: 5
+    Stat: 5,
+    Button: 6
+}
+
+class EntryManager {
+    constructor(entry)
+    {
+        this.entry = entry;
+        this.entryElements = [];
+    }
 }
 
 let EntryHandler = class {
@@ -34,7 +48,8 @@ let EntryHandler = class {
         this.displayType = displayType;
         this.entriesElement = document.getElementById(entriesElementName);
         this.elements = elements;
-        this.createdElements = []
+
+        this.entryManagers = []
     }
 
     addEntry(row, rowNum)
@@ -42,16 +57,19 @@ let EntryHandler = class {
         let uuid = uuidv4();
         uuid = uuid + "." + rowNum;
 
-        let entry = this.getEntry(row, rowNum, uuid);
-        if(entry === undefined)
+        let entryManager = this.getEntry(row, rowNum, uuid);
+        if(entryManager === undefined)
             return;
 
-        this.entriesElement.appendChild(entry);
+        this.entriesElement.appendChild(entryManager.entry);
+        this.entryManagers.push(entryManager);
+
+        return entryManager;
     }
 
     addEntryBefore(row, rowNum, uuid, beforeEntry)
     {
-        let elem = this.getEntry(row, rowNum, uuid);
+        let elem = this.getEntry(row, rowNum, uuid).entry;
         this.entriesElement.insertBefore(elem, beforeEntry);
     }
 
@@ -70,34 +88,45 @@ let EntryHandler = class {
         entry.setAttribute('class', 'entry');
         entry.id = this.prefix === '' ? uuid : getId(uuid, this.prefix);
 
-        this.updateEntryHeight(entry)
+        this.updateStyling(entry);
+
+        let entryManager = new EntryManager(entry);
 
         for(let elementId in this.elements) {
-            let newElement = eval("new " + this.elements[elementId] + "(row, uuid);");
-
-            this.createdElements.push(newElement);
+            let newElement = eval("new " + this.elements[elementId] + "(row, uuid, entryManager);");
 
             newElement.createEntryElement();
             newElement.updateStyle(this.displayType);
             entry.append(newElement.elem);
+
+            entryManager.entryElements.push(newElement);
         }
 
-        return entry;
+        return entryManager;
     }
 
-    updateEntryHeight(entry) {
+    updateStyling(entry) {
 
-        if (this.displayType == DisplayType.Detailed) {
-            entry.style.height = '108px';
-        } else if (this.displayType == DisplayType.SemiDetailed) {
-            entry.style.height = '84px';
-        } else if(this.displayType == DisplayType.Simple) {
-            entry.style.height = '55px';
-        } else if(this.displayType == DisplayType.Edit) {
-            entry.style.height = '175px';
-        } else if(this.displayType == DisplayType.Stat) {
-            entry.style.height = '35px';
-            this.entriesElement.style.marginTop = '25px';
+        switch(parseInt(this.displayType))
+        {
+            case DisplayType.Detailed:
+                entry.style.height = '108px';
+                break;
+            case DisplayType.SemiDetailed:
+                entry.style.height = '84px';
+                break;
+            case DisplayType.Simple:
+                entry.style.height = '55px';
+                break;
+            case DisplayType.Edit:
+                entry.style.height = '175px';
+                break;
+            case DisplayType.Button:
+                this.entriesElement.style.width = '350px';
+            case DisplayType.Stat:
+                this.entriesElement.style.marginTop = '25px';
+                entry.style.height = '35px';
+                break;
         }
     }
 }

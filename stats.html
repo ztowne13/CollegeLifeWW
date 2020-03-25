@@ -17,7 +17,7 @@
     <a href="stats.html">Stats</a>
     <a href="addentries.html">Add Card</a>
     <a href="entries.html">Entries</a>
-    <a href="tshirtcards.html">Deliveries</a>
+    <a href="deliveries.html">Deliveries</a>
     <a href="debug.html">Debug</a>
 </div>
 <div class="body">
@@ -27,15 +27,18 @@
         <!--Add buttons to initiate auth sequence and sign out-->
 
         <div class="stats">
-            <h3>People Entered:</h3>
-            <p id="entered">loading...</p>
-            <h3>T-Shirts Delivered:</h3>
-            <p id="delivered">loading...</p>
-            <h3>T-Shirts to be Delivered:</h3>
-            <p id="tobedelivered">loading...</p>
-            <h3>Recruiters by the Numbers</h3>
+            <h3>Total T-Shirt Cards</h3>
+            <statgreen id="entered">loading...</statgreen>
+            <p></p>
+            <h3>T-Shirts Delivered</h3>
+            <statgreen id="delivered">loading...</statgreen>
+            <p></p>
+            <h3>T-Shirts to be Delivered</h3>
+            <statred id="tobedelivered">loading...</statred>
     <!--        <p id="recruit">loading...</p>-->
         </div>
+
+        <h1>Leaderboard</h1>
 
         <div class="entries" id="entries"></div>
 

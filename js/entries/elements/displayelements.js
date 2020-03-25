@@ -153,3 +153,45 @@ class StatEntryElement extends EntryElement
         return this.elem;
     }
 }
+
+class TextEntryElement extends EntryElement
+{
+    createEntryElement()
+    {
+        this.elem = document.createElement("textentry");
+        this.elem.innerHTML = this.row[0];
+        this.elem.id = getId(this.uuid, "textentry");
+        this.entryElement.style.backgroundColor = '#2d2d2d';
+
+        if(this.row.length !== 1)
+        {
+            this.elem.style.color = this.row[1];
+        }
+
+        this.entryManager.activated = false;
+        this.hookUp(true);
+
+        return this.elem;
+    }
+
+    onClick() {
+        this.entryManager.activated = !this.entryManager.activated;
+        this.onClickEntry();
+    }
+
+    onClickEntry() {
+
+        this.entryManager.activated = !this.entryManager.activated;
+
+        if(this.entryManager.activated)
+        {
+            this.entryElement.style.backgroundColor = '#505050';
+        }
+        else
+        {
+            this.entryElement.style.backgroundColor = '#2d2d2d';
+        }
+
+        updatePossibleBuildings(cachedData);
+    }
+}

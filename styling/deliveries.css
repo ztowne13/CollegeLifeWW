@@ -1,0 +1,19 @@
+.mainbody textentry {
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.mainbody edit {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: normal;
+}
+
+.mainbody changer {
+    background-color: black;
+    width: 100px;
+    height: 100px;
+}

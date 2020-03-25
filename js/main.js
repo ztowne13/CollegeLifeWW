@@ -228,3 +228,28 @@ function isDefined(variable)
 {
     return typeof variable !== 'undefined'
 }
+
+function loadRows(data)
+{
+    this.rows = []
+    let maxLength = 26;
+    let count = 0;
+
+    for (let i = 0; i < data.length; i++) {
+        let row = data[i];
+        // Print columns A and E, which correspond to indices 0 and 4.
+
+        let line = row[0];
+        for(j = 1; j < row.length && j < maxLength; j++)
+        {
+            if(i == 0 && row[j] == "")
+            {
+                maxLength = j;
+                break;
+            }
+            line = line + ", " + row[j];
+        }
+
+        this.rows.push(row);
+    }
+}
