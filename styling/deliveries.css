@@ -10,10 +10,50 @@
     padding-left: 10px;
     padding-right: 10px;
     font-weight: normal;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.mainbody delete {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: normal;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .mainbody changer {
-    background-color: black;
-    width: 100px;
-    height: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: normal;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #7d7d7d;
+    float: right;
+    opacity: 1;
+    font-size: 20px;
+    color: white;
+}
+
+.mainbody changer:hover {
+    cursor: pointer;
+    background-color: #505050;
+}
+
+.mainbody back {
+    float: right;
+    opacity: 1;
+    font-size: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: normal;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #fc5732;
+    color: white;
+}
+
+.entry back:hover {
+    cursor: pointer;
+    background-color: #e60000;
 }

@@ -1,20 +1,21 @@
 class TextButtonEntryElement extends EntryElement
 {
-    constructor(text, type, row, uuid, entryManager)
+    constructor(text, type, row, uuid, entryManager, ignoreTypeForId = false)
     {
         super(row, uuid, entryManager);
 
         this.text = text;
         this.type = type;
+        this.ignoreTypeForId = ignoreTypeForId;
     }
 
     createEntryElement()
     {
         this.elem = document.createElement(this.type);
         this.elem.innerHTML = this.text;
-        this.elem.id = getId(this.uuid, this.type);
+        this.elem.id = this.ignoreTypeForId ? this.uuid : getId(this.uuid, this.type);
 
-        this.hookUp();
+        this.hookUp(false);
 
         return this.elem;
     }
@@ -76,7 +77,8 @@ class EditEntryElement extends EntryButtonEntryElement
         let entryHandler = new EntryHandler('editing', DisplayType.Edit, 'entries', elements);
 
         let rowNum = id.split(".")[1];
-        entryHandler.addEntryBefore(this.row, rowNum, uuid, document.getElementById(uuid));
+        let entryManager = entryHandler.addEntryBefore(this.row, rowNum, uuid, document.getElementById(uuid));
+        entryManager.previousEntryManager = this.entryManager;
     }
 }
 
@@ -176,57 +178,5 @@ class DeleteEntryElement extends EntryButtonEntryElement
         data[rowNum - 1] = "";
 
         document.getElementById(getUuidFromId(this.elem.id)).style.display = 'none';
-    }
-}
-
-class PrimeroEntryElement extends TextButtonEntryElement
-{
-    constructor(row, uuid, entryManager) {
-        super('P', 'edit', row, uuid, entryManager);
-    }
-}
-
-class SegundoEntryElement extends TextButtonEntryElement
-{
-    constructor(row, uuid, entryManager) {
-        super('S', 'edit', row, uuid, entryManager);
-    }
-}
-
-class CuartoEntryElement extends TextButtonEntryElement
-{
-    constructor(row, uuid, entryManager) {
-        super('C', 'edit', row, uuid, entryManager);
-    }
-}
-
-class ReassignEntryElement extends TextButtonEntryElement
-{
-    constructor(row, uuid, entryManager)
-    {
-        super('✎', 'edit', row, uuid, entryManager);
-    }
-
-    onClick() {
-        let id = this.elem.id;
-        let uuid = getUuidFromId(id);
-
-        document.getElementById(uuid).style.display = 'none';
-
-        let elements = [
-            ElementTypes.Primero,
-            ElementTypes.Segundo,
-            ElementTypes.Cuarto
-        ];
-
-        let entryHandler = new EntryHandler('reassigning', DisplayType.Button, 'entries-building', elements);
-
-        let rowNum = id.split(".")[1];
-        entryHandler.addEntryBefore(this.row, rowNum, uuid, document.getElementById(uuid));
-    }
-
-    updateStyle(displayType) {
-        this.elem.style.paddingTop = '5px';
-        this.elem.style.paddingBottom = '5px';
     }
 }

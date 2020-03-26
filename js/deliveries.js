@@ -32,6 +32,7 @@ function createDormChooser(data)
 
 function updatePossibleBuildings(data)
 {
+    console.log("UPDATE BUILDINGS");
     let elements = [
         ElementTypes.Text,
         ElementTypes.Reassign
@@ -78,7 +79,6 @@ function updatePossibleBuildings(data)
     {
         let upperCased = possibleBuildings[i][0].toUpperCase() + possibleBuildings[i].substring(1)
 
-        console.log("selected: " + selected);
         let plusCount = upperCased + " (" + countMatches(data, [getAddressIndex()], [upperCased]) + ")";
         entryHandler.addEntry([plusCount], -1);
     }

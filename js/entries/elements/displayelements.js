@@ -175,11 +175,17 @@ class TextEntryElement extends EntryElement
     }
 
     onClick() {
-        this.entryManager.activated = !this.entryManager.activated;
         this.onClickEntry();
+        this.entryManager.blockEntryClick = true;
     }
 
     onClickEntry() {
+        if(this.entryManager.blockEntryClick) {
+            this.entryManager.blockEntryClick = false;
+            return;
+        }
+
+        console.log("onclickentry");
 
         this.entryManager.activated = !this.entryManager.activated;
 

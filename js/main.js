@@ -18,8 +18,6 @@ var mappedColumns = {};
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
-    importJs('data/data.js');
-
     gapi.load('client:auth2', initClient);
 }
 
@@ -252,4 +250,64 @@ function loadRows(data)
 
         this.rows.push(row);
     }
+}
+
+function createUpdateArray(dataRow)
+{
+    let newArray = [];
+
+    newArray[getFirstNameIndex()] = dataRow[getFirstNameIndex()];
+    newArray[getLastNameIndex()] = dataRow[getLastNameIndex()];
+    newArray[getYearIndex()] = dataRow[getYearIndex()];
+    newArray[getTShirtIndex()] = dataRow[getTShirtIndex()];
+    newArray[getEmailIndex()] = dataRow[getEmailIndex()];
+    newArray[getCellIndex()] = dataRow[getCellIndex()];
+    newArray[getSizeIndex()] = dataRow[getSizeIndex()];
+    newArray[getBibleStudyIndex()] = dataRow[getBibleStudyIndex()];
+    newArray[getFacebookIndex()] = dataRow[getFacebookIndex()];
+    newArray[getNotesIndex()] = dataRow[getNotesIndex()];
+    newArray[getRecruiterIndex()] = dataRow[getRecruiterIndex()];
+    newArray[getAddressIndex()] = dataRow[getAddressIndex()];
+    newArray[getDormIndex()] = dataRow[getDormIndex()];
+
+    return newArray;
+}
+
+
+function makeApiCall_overwriteUpdate(range, array, after) {
+    var params = {
+        spreadsheetId: SHEET_ID,
+        range: range,
+        valueInputOption: 'USER_ENTERED',
+    };
+
+    var valueRangeBody = {
+        "range": range,
+        "majorDimension": "ROWS",
+        "values": [array]
+    };
+
+    var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
+    request.then(function(response) {
+        console.log(response.result);
+        loadData(after);
+    }, function(reason) {
+        console.error('error: ' + reason.result.error.message);
+    });
+}
+
+function makeApiCall_overwrite(range) {
+    range = PAGE_NAME + range;
+
+    var params = {
+        spreadsheetId: SHEET_ID,
+        range: range,
+    };
+
+    var request = gapi.client.sheets.spreadsheets.values.clear(params);
+    request.then(function(response) {
+        console.log(response.result);
+    }, function(reason) {
+        console.error('error: ' + reason.result.error.message);
+    });
 }

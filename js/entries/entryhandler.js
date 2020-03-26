@@ -18,9 +18,12 @@ const ElementTypes = {
     Stat: 'StatEntryElement',
     Text: 'TextEntryElement',
     Reassign: 'ReassignEntryElement',
-    Primero: 'PrimeroEntryElement',
-    Segundo: 'SegundoEntryElement',
-    Cuarto: 'CuartoEntryElement'
+    ReassignPrimero: 'PrimeroReassignEntryElement',
+    ReassignSegundo: 'SegundoReassignEntryElement',
+    ReassignTercero: 'TerceroReassignEntryElement',
+    ReassignCuarto: 'CuartoReassignEntryElement',
+    ReassignOffCampus: 'OffCampusReassignEntryElement',
+    ReassignReturn: 'ReturnReassignEntryElement'
 };
 
 const DisplayType = {
@@ -37,6 +40,10 @@ class EntryManager {
     {
         this.entry = entry;
         this.entryElements = [];
+        this.activated = false;
+        this.blockEntryClick = false;
+
+        this.previousEntryManager = undefined;
     }
 }
 
@@ -49,7 +56,7 @@ let EntryHandler = class {
         this.entriesElement = document.getElementById(entriesElementName);
         this.elements = elements;
 
-        this.entryManagers = []
+        this.entryManagers = [];
     }
 
     addEntry(row, rowNum)
@@ -69,8 +76,12 @@ let EntryHandler = class {
 
     addEntryBefore(row, rowNum, uuid, beforeEntry)
     {
-        let elem = this.getEntry(row, rowNum, uuid).entry;
+        let entryManager = this.getEntry(row, rowNum, uuid);
+        let elem = entryManager.entry;
         this.entriesElement.insertBefore(elem, beforeEntry);
+
+        this.entryManagers.push(entryManager);
+        return entryManager;
     }
 
     getEntry(row, rowNum, uuid)

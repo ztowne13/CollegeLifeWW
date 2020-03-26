@@ -134,45 +134,6 @@ function refresh(data) {
     display(data);
 }
 
-function makeApiCall_overwriteUpdate(range, array, after) {
-    var params = {
-        spreadsheetId: SHEET_ID,
-        range: range,
-        valueInputOption: 'USER_ENTERED',
-    };
-
-    var valueRangeBody = {
-        "range": range,
-        "majorDimension": "ROWS",
-        "values": [array]
-    };
-
-    var request = gapi.client.sheets.spreadsheets.values.update(params, valueRangeBody);
-    request.then(function(response) {
-        console.log(response.result);
-        loadData(refresh);
-    }, function(reason) {
-        console.error('error: ' + reason.result.error.message);
-    });
-
-}
-
-function makeApiCall_overwrite(range) {
-    range = PAGE_NAME + range;
-
-    var params = {
-        spreadsheetId: SHEET_ID,
-        range: range,
-    };
-
-    var request = gapi.client.sheets.spreadsheets.values.clear(params);
-    request.then(function(response) {
-        console.log(response.result);
-    }, function(reason) {
-        console.error('error: ' + reason.result.error.message);
-    });
-}
-
 function getValFrom(uuid, prefix)
 {
     if(document.getElementById(getId(uuid, prefix)) == null)
